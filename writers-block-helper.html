@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writer's Block Helper ✍️📚</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5e9da 0%, #e9d5c0 100%);
+      font-family: 'EB Garamond', serif;
+      color: #3e2c19;
+      margin: 0;
+      min-height: 100vh;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff8f0;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(60, 40, 20, 0.12);
+      padding: 36px 32px 32px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .container:before {
+      content: "";
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 180px; height: 180px;
+      background: url('https://img.icons8.com/ios-filled/100/000000/open-book--v2.png') no-repeat center/contain;
+      opacity: 0.08;
+      z-index: 0;
+    }
+    .container:after {
+      content: "";
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 120px; height: 120px;
+      background: url('https://img.icons8.com/ios-filled/100/000000/pen.png') no-repeat center/contain;
+      opacity: 0.10;
+      z-index: 0;
+    }
+    h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5em;
+      text-align: center;
+      letter-spacing: 1px;
+      color: #7c4a1e;
+      position: relative;
+      z-index: 1;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+      position: relative;
+      z-index: 1;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 0.3em;
+      font-size: 1.1em;
+      letter-spacing: 0.5px;
+    }
+    input[type="text"], textarea, select {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1em;
+      padding: 0.7em;
+      border-radius: 7px;
+      border: 1.5px solid #c7b299;
+      background: #f9f6f2;
+      margin-bottom: 0.2em;
+      resize: vertical;
+    }
+    textarea {
+      min-height: 90px;
+      max-height: 250px;
+    }
+    .genre-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    .genre-list label {
+      font-weight: normal;
+      background: #f3e3d3;
+      border-radius: 5px;
+      padding: 0.3em 0.7em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .genre-list input[type="checkbox"]:checked + span {
+      background: #e0c3a3;
+      font-weight: bold;
+    }
+    .or-divider {
+      text-align: center;
+      color: #bfa07a;
+      font-style: italic;
+      margin: 0.5em 0;
+      font-size: 1em;
+    }
+    .upload-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+    .btn {
+      background: linear-gradient(90deg, #bfa07a 0%, #7c4a1e 100%);
+      color: #fff;
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 7px;
+      padding: 0.7em 1.5em;
+      cursor: pointer;
+      margin-top: 0.5em;
+      box-shadow: 0 2px 8px rgba(60, 40, 20, 0.08);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover {
+      background: linear-gradient(90deg, #7c4a1e 0%, #bfa07a 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .output-section {
+      margin-top: 2.5em;
+      background: #f7f2ed;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
+      padding: 2em 1.5em 1.5em 1.5em;
+      position: relative;
+      z-index: 1;
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: #4a2e13;
+      border-left: 7px solid #bfa07a;
+      min-height: 120px;
+      display: none;
+    }
+    .output-section.visible {
+      display: block;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .output-section h2 {
+      font-family: 'EB Garamond', serif;
+      color: #7c4a1e;
+      margin-top: 0;
+      margin-bottom: 0.7em;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .output-section .rating {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #bfa07a;
+      margin-top: 1.2em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .output-section .emoji {
+      font-size: 1.5em;
+      margin-right: 0.3em;
+    }
+    .output-section ul {
+      margin: 0.5em 0 0.5em 1.2em;
+      padding: 0;
+    }
+    .output-section li {
+      margin-bottom: 0.4em;
+    }
+    .output-section .divider {
+      border-top: 2px dashed #bfa07a;
+      margin: 1.2em 0 1em 0;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 18px 6px 18px 6px;
+      }
+      .output-section {
+        padding: 1em 0.5em 1em 0.5em;
+      }
+    }
+    .out-h2 {
+      font-family: 'EB Garamond', serif;
+      color: #7c4a1e;
+      font-size: 1.35em;
+      margin-top: 2.6em;
+      margin-bottom: 1.7em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      letter-spacing: 0.5px;
+    }
+    .out-main {
+      font-size: 1.08em;
+      margin-bottom: 0.5em;
+      margin-left: 0.2em;
+      line-height: 1.7;
+    }
+    .out-subhead {
+      font-family: 'EB Garamond', serif;
+      color: #bfa07a;
+      font-size: 1.08em;
+      margin-top: 0.7em;
+      margin-bottom: 0.2em;
+      font-weight: bold;
+      margin-left: 0.2em;
+      letter-spacing: 0.2px;
+    }
+    .out-list {
+      margin: 0.2em 0 0.5em 1.3em;
+      padding: 0;
+      list-style: disc inside;
+    }
+    .out-list li {
+      margin-bottom: 0.3em;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+    /* Animated background elements */
+    .bg-anim {
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      animation-timing-function: ease-in-out;
+    }
+    .bg-book {
+      width: 90px; height: 90px;
+      left: 6vw; top: 12vh;
+      animation: floatBook 12s infinite alternate;
+    }
+    .bg-pen {
+      width: 60px; height: 60px;
+      right: 8vw; top: 30vh;
+      animation: floatPen 14s infinite alternate-reverse;
+    }
+    .bg-paper {
+      width: 70px; height: 70px;
+      left: 12vw; bottom: 10vh;
+      animation: floatPaper 16s infinite alternate;
+    }
+    .bg-book2 {
+      width: 60px; height: 60px;
+      right: 15vw; bottom: 18vh;
+      animation: floatBook2 18s infinite alternate-reverse;
+    }
+    @keyframes floatBook {
+      0% { transform: translateY(0) rotate(-8deg); }
+      100% { transform: translateY(30px) rotate(8deg); }
+    }
+    @keyframes floatPen {
+      0% { transform: translateY(0) rotate(10deg); }
+      100% { transform: translateY(-25px) rotate(-10deg); }
+    }
+    @keyframes floatPaper {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-35px) rotate(12deg); }
+    }
+    @keyframes floatBook2 {
+      0% { transform: translateY(0) rotate(5deg); }
+      100% { transform: translateY(40px) rotate(-7deg); }
+    }
+    .container { z-index: 2; position: relative; }
+    .privacy-note {
+      margin-top: 2em;
+      font-size: 0.98em;
+      color: #7c4a1e;
+      background: #f3e3d3;
+      border-radius: 7px;
+      padding: 0.7em 1em;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(60,40,20,0.06);
+      z-index: 3;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated background elements -->
+  <img class="bg-anim bg-book" src="https://img.icons8.com/ios-filled/100/000000/open-book--v2.png" alt="book" />
+  <img class="bg-anim bg-pen" src="https://img.icons8.com/ios-filled/100/000000/pen.png" alt="pen" />
+  <img class="bg-anim bg-paper" src="https://img.icons8.com/ios-filled/100/000000/paper.png" alt="paper" />
+  <img class="bg-anim bg-book2" src="https://img.icons8.com/ios-filled/100/000000/book-shelf.png" alt="book2" />
+  <div class="container">
+    <h1>Writer's Block Helper <span style="font-size:1.2em;">✍️📚</span></h1>
+    <form id="writerForm">
+      <div>
+        <label for="storyName">Story Name <span>📖</span></label>
+        <input type="text" id="storyName" name="storyName" required placeholder="Enter your story's title...">
+      </div>
+      <div>
+        <label>Genres <span>🎭</span> <small>(Select all that apply)</small></label>
+        <div class="genre-list">
+          <label><input type="checkbox" name="genres" value="Fantasy"><span> Fantasy 🧙‍♂️</span></label>
+          <label><input type="checkbox" name="genres" value="Science Fiction"><span> Sci-Fi 🚀</span></label>
+          <label><input type="checkbox" name="genres" value="Romance"><span> Romance 💖</span></label>
+          <label><input type="checkbox" name="genres" value="Mystery"><span> Mystery 🕵️‍♀️</span></label>
+          <label><input type="checkbox" name="genres" value="Thriller"><span> Thriller 😱</span></label>
+          <label><input type="checkbox" name="genres" value="Drama"><span> Drama 🎭</span></label>
+          <label><input type="checkbox" name="genres" value="Adventure"><span> Adventure 🏔️</span></label>
+          <label><input type="checkbox" name="genres" value="Horror"><span> Horror 👻</span></label>
+          <label><input type="checkbox" name="genres" value="Historical"><span> Historical 🏰</span></label>
+          <label><input type="checkbox" name="genres" value="Comedy"><span> Comedy 😂</span></label>
+          <label><input type="checkbox" name="genres" value="Other"><span> Other ✨</span></label>
+        </div>
+        <input type="text" id="customGenre" placeholder="Add custom genre...">
+        <button type="button" class="btn" id="addGenreBtn" style="font-size:0.9em; padding:0.3em 1em; margin-top:0.3em;">Add Genre</button>
+      </div>
+      <div class="upload-section">
+        <label for="storyText">Write a part of your story <span>📝</span></label>
+        <textarea id="storyText" name="storyText" placeholder="Paste or write a part of your story here..."></textarea>
+        <div class="or-divider">or</div>
+        <input type="file" id="storyFile" accept=".txt,.md,.docx">
+      </div>
+      <div>
+        <label for="situation">Situation Tag <span>🔖</span></label>
+        <input type="text" id="situation" name="situation" required placeholder="e.g. Hero faces a dilemma, love triangle, plot twist...">
+      </div>
+      <button type="submit" class="btn">Analyze My Story <span>🔍</span></button>
+    </form>
+    <div class="output-section" id="outputSection">
+      <!-- AI output will be inserted here -->
+    </div>
+    <div class="privacy-note">
+      <span style="font-size:1.1em;">🔒</span> <b>Privacy:</b> Your story and input are <b>not stored</b> or tracked by this app. Data is sent only to the AI API for analysis and is subject to Google's privacy policy.
+    </div>
+  </div>
+  <script src="writers-block-helper.js"></script>
+</body>
+</html> 
