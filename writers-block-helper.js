@@ -60,7 +60,7 @@ function buildPrompt(storyName, genres, storyText, situation) {
 
 async function callGeminiAPI(prompt) {
   const apiKey = 'AIzaSyDz0nKAN0XFANWQmFCtZPDLJjMRwrC5SZs';
-  const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-latest:generateContent?key=' + apiKey;
+  const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKey;
   const body = {
     contents: [{ parts: [{ text: prompt }] }]
   };
