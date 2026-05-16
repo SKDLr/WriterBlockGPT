@@ -104,7 +104,7 @@ async function callGeminiAPIWithRetry(prompt, retries = 3, delay = 1500) {
 // Core API Fetch Function
 async function callGeminiAPI(prompt) {
   // ⚠️ ACTION REQUIRED: Replace this string with your BRAND NEW API key from Google AI Studio
-  const apiKey = 'PASTE_YOUR_NEW_API_KEY_HERE'; 
+  const apiKey = 'AIzaSyAV2LclOdDJlaUBAISNdPnaq7Qn4gaecCo'; 
   
   const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey;
   const body = {
